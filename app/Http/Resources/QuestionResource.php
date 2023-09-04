@@ -21,7 +21,7 @@ class QuestionResource extends JsonResource
             'title' => $this->title,
             'question_body' => $this->question_body,
             'question_type' => $this->question_type,
-            'propositions'=>$this->propositions,
+            'propositions' => $this->questChoice->pluck('wording'),// J'utilise la method pluck pour transformer le champ wording en tableau a cause de la relation hasmany
         ];
     }
 }
