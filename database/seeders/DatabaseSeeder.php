@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            TypeSeeder::class,
             QuestionSeeder::class,
             UserSeeder::class,
+            Multiple_choiceSeeder::class,
         ]);
     }
 }

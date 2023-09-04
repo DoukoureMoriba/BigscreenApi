@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\QuestionResource;
+use App\Models\Questions;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -19,6 +21,8 @@ class QuestionController extends Controller
             return response()->json([
                 'status' => 'Done',
                 'message' => 'La liste des questions a été récuperer avec succes',
+                'data' => QuestionResource::collection(Questions::all()), // On retourne une collection de la ressources Questions.
+
             ]);
         } catch (Exception $error) {
             return response()->json(

@@ -41,4 +41,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * Fonction qui va permettre de gerer la relation entre la table Users  et la table  Pivot_user_response
+     */
+    public function userPivot() {
+        return $this->hasOne(Pivot_user_response::class, 'pivot_user_id');
+    }
+
+     /**
+     * Fonction qui va permettre de gerer la relation entre la table  users  et la table Responses
+     */
+    public function userResp() {
+        return $this->hasOne(Responses::class, 'user_id');
+    }
 }

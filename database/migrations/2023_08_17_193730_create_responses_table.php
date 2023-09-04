@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
-            $table->string('user_email');
-            $table->foreignId('question_number')->references('id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('response_id')->references('id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
             $table->string('user_response');
             $table->timestamps();
         });

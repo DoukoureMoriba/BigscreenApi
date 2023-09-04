@@ -21,9 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
+
+
+
 // Route pour le login
 Route::post('/login',[UserController::class,'login']);
-
 
 // Route pour le logout
 Route::get('/logout',[UserController::class,'logout']);
@@ -31,6 +35,5 @@ Route::get('/logout',[UserController::class,'logout']);
 // Route qui va retourner la list des Questions.
 Route::get('/questionList',[QuestionController::class,'index']);
 
-
-// Route pour recuperer les Responses.
+// Route pour recuperer la list des  Responses.
 Route::get('/responseList',[ResponseController::class,'index']);

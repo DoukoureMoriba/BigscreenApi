@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Responses;
 use Illuminate\Http\Request;
 
@@ -14,13 +15,23 @@ class ResponseController extends Controller
      */
     public function index()
     {
-        return response()->json([
-            'status' => 'Done',
-            'message' => 'La liste des réponses a été récuperer avec succes',
-            'data' => Responses::all(),
-        ]);
+ 
+        try {
+
+            return response()->json([
+                'status' => 'Done',
+                'message' => 'La liste des réponses a été récuperer avec succes',
+                'data' => Responses::all(),
+            ]);
+        } catch (Exception $error) {
+            return response()->json(
+                $error
+            );
+        }
+        
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *
