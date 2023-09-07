@@ -50,7 +50,16 @@ class ResponseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validez et traitez les données reçues depuis le front-end
+        $validatedData = $request->validate([
+            'responses' => 'required|array', // Assurez-vous que les réponses sont envoyées sous forme de tableau
+            // Ajoutez d'autres règles de validation selon vos besoins
+        ]);
+
+        // Vous pouvez maintenant enregistrer ces réponses dans votre base de données ou effectuer toute autre opération nécessaire.
+
+        // Répondez au client avec une confirmation de succès
+        return response()->json(['message' => 'Réponses enregistrées avec succès']);
     }
 
     /**

@@ -35,3 +35,6 @@ Route::get('/questionList',[QuestionController::class,'index']);
 
 // Route pour recuperer la list des  Responses.
 Route::get('/responseList',[ResponseController::class,'index']);
+
+// Route pour soumettre les responses.
+Route::post('/submitResponses', [ResponseController::class,'store']);
