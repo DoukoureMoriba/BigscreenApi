@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ResponseResource;
 use Exception;
-use App\Models\Responses;
 use App\Models\User;
+use App\Models\Responses;
 use Illuminate\Http\Request;
+use App\Models\Pivot_user_response;
+use App\Http\Resources\ResponseResource;
 
 class ResponseController extends Controller
 {
@@ -73,6 +74,9 @@ class ResponseController extends Controller
                 $addResponse->save();
             }
 
+    
+            Pivot_user_response::create(["pivot_user_id" => $surveyUser->id,"url"=>base64_encode("reponse_".$surveyUser->id)]);
+
             return response()->json([
                 'status' => 'Done',
                 'message' => 'Réponses enregistrées avec succès',
@@ -96,9 +100,17 @@ class ResponseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($code)
     {
-        //
+        $user = Pivot_user_response::where("url","=",$code)->first();
+        
+
+            $responses = Responses::where("user_id","=",$user->pivot_user_id)->get();
+        return response()->json([
+            'status' => 'Done',
+            'message' => 'La liste des réponses a été récuperer avec succes',
+            'data' => $responses,
+        ]);
     }
 
     /**

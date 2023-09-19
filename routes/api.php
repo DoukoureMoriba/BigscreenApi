@@ -38,3 +38,6 @@ Route::get('/responseList',[ResponseController::class,'index']);
 
 // Route pour soumettre les responses.
 Route::post('/submitResponses', [ResponseController::class,'store']);
+
+// Route pour afficher les réponses de l'utilisateur
+Route::get('/getResponse/{code}',[ResponseController::class,'show']);
