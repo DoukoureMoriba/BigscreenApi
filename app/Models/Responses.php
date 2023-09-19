@@ -14,12 +14,12 @@ class Responses extends Model
         'response_id',
         'user_response',
     ];
-
+    
      /**
      * Fonction qui va permettre de gerer la relation entre la table Responses et la table questions
      */
     public function respQuest() {
-        return $this->hasOne(Questions::class, 'response_id');
+        return $this->belongsTo(Questions::class, 'response_id');
     }
 
 

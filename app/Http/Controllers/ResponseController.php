@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ResponseResource;
 use Exception;
 use App\Models\Responses;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ResponseController extends Controller
@@ -18,10 +20,13 @@ class ResponseController extends Controller
  
         try {
 
+            // Groupement des réponses par utilisateur
+        $responses = Responses::all()->groupBy('user_id');
+
             return response()->json([
                 'status' => 'Done',
                 'message' => 'La liste des réponses a été récuperer avec succes',
-                'data' => Responses::all(),
+                'data' => ResponseResource::collection($responses), // On retourne une collection de réponses groupées par utilisateur.
             ]);
         } catch (Exception $error) {
             return response()->json(
@@ -49,18 +54,41 @@ class ResponseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+{
+    try {
         // Validez et traitez les données reçues depuis le front-end
         $validatedData = $request->validate([
-            'responses' => 'required|array', // Assurez-vous que les réponses sont envoyées sous forme de tableau
-            // Ajoutez d'autres règles de validation selon vos besoins
+            "email" =>  "required|email",
+            "responses" => "required|array", // Assurez-vous que le nom du champ correspond à ce que vous envoyez depuis Vue.js
         ]);
 
-        // Vous pouvez maintenant enregistrer ces réponses dans votre base de données ou effectuer toute autre opération nécessaire.
+        if ($validatedData) {
+            $surveyUser = User::create(["email" => $validatedData["email"],"password"=> "password","role"=>"user"]);
+            
+            foreach ($validatedData["responses"] as $response) {
+                $addResponse = new Responses();
+                $addResponse->response_id = $response["questionId"];
+                $addResponse->user_response = $response["userResponse"];
+                $addResponse->user_id = $surveyUser->id; // Assurez-vous d'ajuster ceci en fonction de votre modèle User
+                $addResponse->save();
+            }
 
-        // Répondez au client avec une confirmation de succès
-        return response()->json(['message' => 'Réponses enregistrées avec succès']);
-    }
+            return response()->json([
+                'status' => 'Done',
+                'message' => 'Réponses enregistrées avec succès',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Une erreur est survenue',
+            ]);
+        }
+
+    } catch (Exception $error) {
+        return response()->json($error);
+    }   
+}
+
 
     /**
      * Display the specified resource.
