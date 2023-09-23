@@ -57,29 +57,32 @@ class ResponseController extends Controller
     public function store(Request $request)
 {
     try {
-        // Validez et traitez les données reçues depuis le front-end
+        // on Valide et traite les données reçues depuis le front-end
         $validatedData = $request->validate([
             "email" =>  "required|email",
-            "responses" => "required|array", // Assurez-vous que le nom du champ correspond à ce que vous envoyez depuis Vue.js
+            "responses" => "required|array", // on verifie si c'est un tableau depuis le front avant de recuperer les infos de ce dernier
         ]);
 
         if ($validatedData) {
+            // on enregistre l'utilisateur dans la table user avec un mot de passe par defaut et un role
             $surveyUser = User::create(["email" => $validatedData["email"],"password"=> "password","role"=>"user"]);
             
             foreach ($validatedData["responses"] as $response) {
                 $addResponse = new Responses();
                 $addResponse->response_id = $response["questionId"];
                 $addResponse->user_response = $response["userResponse"];
-                $addResponse->user_id = $surveyUser->id; // Assurez-vous d'ajuster ceci en fonction de votre modèle User
+                $addResponse->user_id = $surveyUser->id; // On parcour le tableau $validatedData["responses"] avant d'envoyer les informations dans la table Responses
                 $addResponse->save();
             }
 
     
-            Pivot_user_response::create(["pivot_user_id" => $surveyUser->id,"url"=>base64_encode("reponse_".$surveyUser->id)]);
+            // on enregistre l'url de l'utilisateur dans la table pivot et on le crypte avec base64_encode
+          $pivot =  Pivot_user_response::create(["pivot_user_id" => $surveyUser->id,"url"=>base64_encode("reponse_".$surveyUser->id)]);
 
             return response()->json([
                 'status' => 'Done',
                 'message' => 'Réponses enregistrées avec succès',
+                'data' => $pivot,
             ]);
         } else {
             return response()->json([
@@ -102,9 +105,10 @@ class ResponseController extends Controller
      */
     public function show($code)
     {
+        //on recupere l'url de l utilissateur
         $user = Pivot_user_response::where("url","=",$code)->first();
         
-
+        // a partir de l'url de l'utilisateur on recupere les réponses de ce dernier
             $responses = Responses::where("user_id","=",$user->pivot_user_id)->get();
         return response()->json([
             'status' => 'Done',
