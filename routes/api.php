@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\UserController;
@@ -41,3 +42,6 @@ Route::post('/submitResponses', [ResponseController::class,'store']);
 
 // Route pour afficher les réponses de l'utilisateur
 Route::get('/getResponse/{code}',[ResponseController::class,'show']);
+
+// Route pour les digrammes en Pie charts.
+Route::get('/PieCharts',[ChartController::class,'pieCharts']);

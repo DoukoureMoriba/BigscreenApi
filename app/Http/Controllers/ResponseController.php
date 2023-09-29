@@ -113,7 +113,14 @@ class ResponseController extends Controller
         return response()->json([
             'status' => 'Done',
             'message' => 'La liste des réponses a été récuperer avec succes',
-            'data' => $responses,
+            'data' =>  $responses->map(function ($response) {
+                return [
+                    'id' => $response->id,
+                    'response_id' => $response->response_id,
+                    'user_response' => $response->user_response,
+                    'question_body' => $response->respQuest->question_body,
+                ];
+            }),
         ]);
     }
 

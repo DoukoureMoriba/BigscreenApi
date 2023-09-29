@@ -47,8 +47,7 @@ class Multiple_choiceSeeder extends Seeder
 
         
         $choice = new Multiple_choice();
-        $choice->wording = 'Windows Mixed
-        Reality';
+        $choice->wording = 'Windows Mixed Reality';
         $choice->question_choice_id = 6;
         $choice->save();
 
