@@ -122,8 +122,12 @@ class Multiple_choiceSeeder extends Seeder
         $choice->save();
 
         $choice = new Multiple_choice();
-        $choice->wording = 'travailler,
-        jouer en solo';
+        $choice->wording = 'travailler';
+        $choice->question_choice_id = 10;
+        $choice->save();
+
+        $choice = new Multiple_choice();
+        $choice->wording = 'jouer en solo';
         $choice->question_choice_id = 10;
         $choice->save();
 

@@ -53,3 +53,6 @@ Route::get('/PieCharts7',[ChartController::class,'PieCharts7']);
 
 // Route pour les digrammes en Pie charts  pour les question 10
 Route::get('/PieCharts10',[ChartController::class,'PieCharts10']);
+
+//Route pour les diagrammes en radar charts pour les questions de 11 a 15
+Route::get('/radarCharts',[ChartController::class,'radarCharts']);

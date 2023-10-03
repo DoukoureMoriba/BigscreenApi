@@ -12,22 +12,21 @@ class ChartController extends Controller
     {
 
         try {
-        // Variable pour recuperer toute les réponses
-        $getResponse = Responses::all();
+            // Variable pour recuperer toute les réponses
+            $getResponse = Responses::all();
 
-        // Variable pour compter les réponses donner a la questions6
-        $quest6 = $getResponse->where('response_id',6)->countBy('user_response');
-        return response()->json([
-            'status' => 'Done',
-            'message' => 'La liste des réponses de la questions6 a été récuperer avec succes',
-            'question6' => $quest6 // On retourne le nombre de réponses de la questions 6 
-        ]);
-    } catch (Exception $error) {
-        return response()->json(
-            $error
-        );
-    }
-
+            // Variable pour compter les réponses donner a la questions6
+            $quest6 = $getResponse->where('response_id', 6)->countBy('user_response');
+            return response()->json([
+                'status' => 'Done',
+                'message' => 'La liste des réponses de la questions6 a été récuperer avec succes',
+                'question6' => $quest6 // On retourne le nombre de réponses de la questions 6 
+            ]);
+        } catch (Exception $error) {
+            return response()->json(
+                $error
+            );
+        }
     }
 
 
@@ -36,9 +35,9 @@ class ChartController extends Controller
         try {
             // Variable pour recuperer toute les réponses
             $getResponse = Responses::all();
-    
+
             // Variable pour compter les réponses donner a la questions7
-            $quest7 = $getResponse->where('response_id',7)->countBy('user_response');
+            $quest7 = $getResponse->where('response_id', 7)->countBy('user_response');
             return response()->json([
                 'status' => 'Done',
                 'message' => 'La liste des réponses de la questions 7 a été récuperer avec succes',
@@ -56,13 +55,13 @@ class ChartController extends Controller
         try {
             // Variable pour recuperer toute les réponses
             $getResponse = Responses::all();
-    
-            // Variable pour compter les réponses donner a la questions7
-            $quest10 = $getResponse->where('response_id',10)->countBy('user_response');
+
+            // Variable pour compter les réponses donner a la questions 10
+            $quest10 = $getResponse->where('response_id', 10)->countBy('user_response');
             return response()->json([
                 'status' => 'Done',
                 'message' => 'La liste des réponses de la questions 10 a été récuperer avec succes',
-                'question10' => $quest10 // On retourne le nombre de réponses de la questions 7
+                'question10' => $quest10 // On retourne le nombre de réponses de la questions 10
             ]);
         } catch (Exception $error) {
             return response()->json(
@@ -71,7 +70,30 @@ class ChartController extends Controller
         }
     }
 
-    
+
+
+    //Fonction pour les radarsCharts de 11 a 15
+    public function radarCharts()
+    {
+        try {
+
+            // Variable pour recuperer toute les réponses
+            $getResponse = Responses::all();
+
+            // Variable pour compter les réponses donner a la questions 11 a 15
+            $average = [];
+            for ($i = 11; $i < 16; $i++) {
+                array_push($average, $getResponse->where('response_id',$i)->avg('user_response'));
+            }
+            return response()->json([
+                'status' => 'Done',
+                'message' => 'La liste des réponses de la questions 11 a 15 a été récuperer avec succes',
+                'average' => $average // On retourne le nombre de réponses de la questions 11 a 15
+            ]);
+        } catch (Exception $error) {
+            return response()->json(
+                $error
+            );
+        }
+    }
 }
-
-
