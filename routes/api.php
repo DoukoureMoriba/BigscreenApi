@@ -43,5 +43,13 @@ Route::post('/submitResponses', [ResponseController::class,'store']);
 // Route pour afficher les réponses de l'utilisateur
 Route::get('/getResponse/{code}',[ResponseController::class,'show']);
 
-// Route pour les digrammes en Pie charts.
+// Route pour les digrammes en Pie charts pour les question 6
 Route::get('/PieCharts',[ChartController::class,'pieCharts']);
+
+
+// Route pour les digrammes en Pie charts  pour les question 7
+Route::get('/PieCharts7',[ChartController::class,'PieCharts7']);
+
+
+// Route pour les digrammes en Pie charts  pour les question 10
+Route::get('/PieCharts10',[ChartController::class,'PieCharts10']);
