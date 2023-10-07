@@ -17,12 +17,11 @@ class QuestionController extends Controller
     public function index()
     {
         try {
-
+            // J'obtiens la liste des questions et les retourne sous forme de ressource Question
             return response()->json([
                 'status' => 'Done',
                 'message' => 'La liste des questions a été récuperer avec succes',
-                'data' => QuestionResource::collection(Questions::all()), // On retourne une collection de la ressources Questions.
-
+                'data' => QuestionResource::collection(Questions::all()), // Je retourne une collection de la ressource Questions.
             ]);
         } catch (Exception $error) {
             return response()->json(

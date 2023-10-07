@@ -14,14 +14,17 @@ class QuestionResource extends JsonResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
-
+        // Je commence par définir la structure du tableau de sortie.
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'question_body' => $this->question_body,
-            'question_type' => $this->question_type,
-            'propositions' => $this->questChoice->pluck('wording'),// J'utilise la method pluck pour transformer le champ wording en tableau a cause de la relation hasmany
+            'id' => $this->id, // L'identifiant unique de la question.
+            'title' => $this->title, // Le titre de la question.
+            'question_body' => $this->question_body, // Le texte principal de la question.
+            'question_type' => $this->question_type, // Le type de la question.
+            'propositions' => $this->questChoice->pluck('wording'), // J'utilise la méthode pluck pour extraire les choix de réponse associés à la question.
+            // Ceci est possible grâce à la relation "questChoice" définie dans le modèle de question.
+            // "pluck('wording')" signifie que je veux extraire la colonne "wording" des choix de réponse
+            // et les stocker dans un tableau.
+            
         ];
     }
 }

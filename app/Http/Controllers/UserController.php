@@ -36,32 +36,34 @@ class UserController extends Controller
      */
 
      
-         //Fonction qui va permettre a l'administrateur de se connecter
-     public function login(Request $request){
-
-        $request->validate([
-            'email'=>'required',
-            'password'=>'required',
-        ]);
-
-        //Variable pour récuperer le email et le mot de passe
-        $credentials = $request->only(['email','password',]);
-        if (Auth::attempt($credentials)) {
-            $authUser = Auth::user();
-            if ($authUser->role=='admin') {
-                return response()->json([
-                    'status'=>'Done',
-                    'message'=>'Vous etes connecter en tant qu\'administrateur',
-                ]);
-            }
-        } else{
-            return response()->json([
-                'status'=>'Error',
-                'message'=>'Impossible de vous connecter',
-            ]);
-
-        }
-    }
+     // Fonction pour permettre à l'administrateur de se connecter.
+     public function login(Request $request)
+     {
+         // Validation des données de la requête.
+         $request->validate([
+             'email' => 'required',
+             'password' => 'required',
+         ]);
+ 
+         // Récupération des informations d'authentification (email et mot de passe).
+         $credentials = $request->only(['email', 'password']);
+ 
+         // Tentative d'authentification.
+         if (Auth::attempt($credentials)) {
+             $authUser = Auth::user();
+             if ($authUser->role == 'admin') {
+                 return response()->json([
+                     'status' => 'Done',
+                     'message' => 'Vous êtes connecté en tant qu\'administrateur.',
+                 ]);
+             }
+         } else {
+             return response()->json([
+                 'status' => 'Error',
+                 'message' => 'Impossible de vous connecter.',
+             ]);
+         }
+     }
 
 
     /**

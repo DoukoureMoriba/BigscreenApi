@@ -21,13 +21,13 @@ class ResponseController extends Controller
  
         try {
 
-            // Groupement des réponses par utilisateur
-        $responses = Responses::all()->groupBy('user_id');
+            // Je groupe les réponses par utilisateur
+            $responses = Responses::all()->groupBy('user_id');
 
             return response()->json([
                 'status' => 'Done',
                 'message' => 'La liste des réponses a été récuperer avec succes',
-                'data' => ResponseResource::collection($responses), // On retourne une collection de réponses groupées par utilisateur.
+                'data' => ResponseResource::collection($responses), // Je retourne une collection de réponses groupées par utilisateur.
             ]);
         } catch (Exception $error) {
             return response()->json(
@@ -57,27 +57,27 @@ class ResponseController extends Controller
     public function store(Request $request)
 {
     try {
-        // on Valide et traite les données reçues depuis le front-end
-        $validatedData = $request->validate([
+            // Je valide et traite les données reçues depuis le front-end
+            $validatedData = $request->validate([
             "email" =>  "required|email",
-            "responses" => "required|array", // on verifie si c'est un tableau depuis le front avant de recuperer les infos de ce dernier
+            "responses" => "required|array", // Je vérifie si c'est un tableau depuis le front-end avant de récupérer les informations de ce dernier.
         ]);
 
         if ($validatedData) {
-            // on enregistre l'utilisateur dans la table user avec un mot de passe par defaut et un role
-            $surveyUser = User::create(["email" => $validatedData["email"],"password"=> "password","role"=>"user"]);
+                // J'enregistre l'utilisateur dans la table user avec un mot de passe par défaut et un rôle
+                $surveyUser = User::create(["email" => $validatedData["email"],"password"=> "password","role"=>"user"]);
             
             foreach ($validatedData["responses"] as $response) {
                 $addResponse = new Responses();
                 $addResponse->response_id = $response["questionId"];
                 $addResponse->user_response = $response["userResponse"];
-                $addResponse->user_id = $surveyUser->id; // On parcour le tableau $validatedData["responses"] avant d'envoyer les informations dans la table Responses
+                $addResponse->user_id = $surveyUser->id; // Je parcours le tableau $validatedData["responses"] avant d'envoyer les informations dans la table Responses
                 $addResponse->save();
             }
 
     
-            // on enregistre l'url de l'utilisateur dans la table pivot et on le crypte avec base64_encode
-          $pivot =  Pivot_user_response::create(["pivot_user_id" => $surveyUser->id,"url"=>base64_encode("reponse_".$surveyUser->id)]);
+                // J'enregistre l'URL de l'utilisateur dans la table pivot et je la crypte avec base64_encode
+                $pivot =  Pivot_user_response::create(["pivot_user_id" => $surveyUser->id,"url"=>base64_encode("reponse_".$surveyUser->id)]);
 
             return response()->json([
                 'status' => 'Done',
@@ -105,11 +105,11 @@ class ResponseController extends Controller
      */
     public function show($code)
     {
-        //on recupere l'url de l utilissateur
+        // Je récupère l'URL de l'utilisateur
         $user = Pivot_user_response::where("url","=",$code)->first();
         
-        // a partir de l'url de l'utilisateur on recupere les réponses de ce dernier
-            $responses = Responses::where("user_id","=",$user->pivot_user_id)->get();
+        // À partir de l'URL de l'utilisateur, je récupère les réponses de celui-ci
+        $responses = Responses::where("user_id","=",$user->pivot_user_id)->get();
         return response()->json([
             'status' => 'Done',
             'message' => 'La liste des réponses a été récuperer avec succes',

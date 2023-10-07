@@ -20,7 +20,7 @@ class ChartController extends Controller
             return response()->json([
                 'status' => 'Done',
                 'message' => 'La liste des réponses de la questions6 a été récuperer avec succes',
-                'question6' => $quest6 // On retourne le nombre de réponses de la questions 6 
+                'question6' => $quest6 // Je retourne le nombre de réponses de la question 6 
             ]);
         } catch (Exception $error) {
             return response()->json(
@@ -41,7 +41,7 @@ class ChartController extends Controller
             return response()->json([
                 'status' => 'Done',
                 'message' => 'La liste des réponses de la questions 7 a été récuperer avec succes',
-                'question7' => $quest7 // On retourne le nombre de réponses de la questions 7
+                'question7' => $quest7 // Je retourne le nombre de réponses de la questions 7
             ]);
         } catch (Exception $error) {
             return response()->json(
@@ -61,7 +61,7 @@ class ChartController extends Controller
             return response()->json([
                 'status' => 'Done',
                 'message' => 'La liste des réponses de la questions 10 a été récuperer avec succes',
-                'question10' => $quest10 // On retourne le nombre de réponses de la questions 10
+                'question10' => $quest10 // Je retourne le nombre de réponses de la questions 10
             ]);
         } catch (Exception $error) {
             return response()->json(
@@ -80,15 +80,17 @@ class ChartController extends Controller
             // Variable pour recuperer toute les réponses
             $getResponse = Responses::all();
 
-            // Variable pour compter les réponses donner a la questions 11 a 15
+            // J'initialise un tableau pour stocker les moyennes des réponses de la question 11 à 15
             $average = [];
+
+            // Je fais une boucle de la question 11 à 15 pour calculer les moyennes
             for ($i = 11; $i < 16; $i++) {
-                array_push($average, $getResponse->where('response_id',$i)->avg('user_response'));
+                array_push($average, $getResponse->where('response_id', $i)->avg('user_response'));
             }
             return response()->json([
                 'status' => 'Done',
                 'message' => 'La liste des réponses de la questions 11 a 15 a été récuperer avec succes',
-                'average' => $average // On retourne le nombre de réponses de la questions 11 a 15
+                'average' => $average // Je retourne les moyennes des réponses des questions 11 à 15
             ]);
         } catch (Exception $error) {
             return response()->json(
