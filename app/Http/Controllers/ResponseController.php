@@ -156,7 +156,7 @@ class ResponseController extends Controller
             $response->user_response = $request->user_response;
             $response->save();
     
-            return response()->json(['status' => 'Success', 'message' => 'Response updated successfully']);
+            return response()->json(['status' => 'Success', 'message' => 'Modification réussit']);
         }
     }
 
