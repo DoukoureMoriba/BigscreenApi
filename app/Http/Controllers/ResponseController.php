@@ -6,6 +6,7 @@ use Exception;
 use App\Models\User;
 use App\Models\Responses;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use App\Models\Pivot_user_response;
 use App\Http\Resources\ResponseResource;
 
@@ -142,9 +143,21 @@ class ResponseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateResponse(Request $request, $id)
     {
-        //
+        {
+            // Je valide la requête
+            $request->validate([
+                'user_response' => 'required|string',
+            ]);
+    
+            // Je récupère la mise à jour des réponses
+            $response = Responses::findOrFail($id);
+            $response->user_response = $request->user_response;
+            $response->save();
+    
+            return response()->json(['status' => 'Success', 'message' => 'Response updated successfully']);
+        }
     }
 
     /**
