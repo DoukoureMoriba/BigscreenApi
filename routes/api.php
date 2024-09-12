@@ -58,5 +58,4 @@ Route::get('/PieCharts10',[ChartController::class,'PieCharts10']);
 Route::get('/radarCharts',[ChartController::class,'radarCharts']);
 
 
-//Route pour mettre à jour les réponses de l'utilisateur
-Route::post('/updateResponse/{id}', [ResponseController::class, 'updateResponse']);
+

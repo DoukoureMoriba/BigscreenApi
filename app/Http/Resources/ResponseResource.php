@@ -17,7 +17,7 @@ class ResponseResource extends JsonResource
         // Je commence par définir la structure du tableau de sortie.
         return [
             // Je récupère l'identifiant de l'utilisateur associé à ces réponses en utilisant le premier élément de la collection.
-            'user_id' => $this->first()->user_id, 
+            'user_id' => $this->first()->user_id,
 
             // Ensuite, je mappe chaque élément de la collection de réponses pour les transformer en un tableau.
             'responses' => $this->map(function ($response) {

@@ -143,22 +143,7 @@ class ResponseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateResponse(Request $request, $id)
-    {
-        {
-            // Je valide la requête
-            $request->validate([
-                'user_response' => 'required|string',
-            ]);
-    
-            // Je récupère la mise à jour des réponses
-            $response = Responses::findOrFail($id);
-            $response->user_response = $request->user_response;
-            $response->save();
-    
-            return response()->json(['status' => 'Success', 'message' => 'Modification réussit']);
-        }
-    }
+  
 
     /**
      * Remove the specified resource from storage.
